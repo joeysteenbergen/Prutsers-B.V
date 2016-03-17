@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.head {
+    background-image: url("Images/HeaderImage.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 27vh;
+    width: 100vw;
+}
+.headerImgage{
+    height: 14vw;
+}

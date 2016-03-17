@@ -5,13 +5,16 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="index.css" type="text/css" rel="stylesheet">
 <title>Untitled Document</title>
-    <img src="Images/webshop-foto.jpg" alt=""/>
-    <h1 class="logo">
-        <img src="Images/LogoWebshop.png" alt=""/>
-    </h1>
+
 </head>
 <body>
-
+<div>
+    <header class="head">
+        <h1 class="logo">
+            <img class="headerImgage" src="Images/LogoWebshop2.png" alt=""/>
+        </h1>
+    </header>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
