@@ -7,9 +7,51 @@ body{
     background-image: url("Images/HeaderImage.png");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 27vh;
-    width: 100vw;
+    position: relative;
 }
 .headerImgage{
     height: 14vw;
+}
+.rotate{
+    -ms-transform: rotate(-10deg); /* IE 9 */
+    -webkit-transform: rotate(-10deg); /* Chrome, Safari, Opera */
+    transform: rotate(-10deg);
+    color: red;
+    position: absolute;
+}
+.menuExtra{
+    padding: 10px;
+}
+.strech{
+    height: 100vh;
+}
+/* navbar css */
+#sidebar {
+    background-color: #6CCAEA;
+    padding: 10px;
+    color: #0000FF;
+}
+
+#sidebar a:hover, a:focus {
+    color: #B7E5F4;
+    background-color: #0000FF;
+    text-decoration: none;
+}
+
+#sidebar.nav > li > a,
+#sidebar.nav > li > a:link {
+    background-color: #6CCAEA;
+    color: #0000FF; !important;
+}
+
+#sidebar.nav > li > a:hover,
+#sidebar.nav > li > a:focus {
+    background-color: #0000FF;
+}
+
+#sidebar.nav-pills > li.active > a,
+#sidebar.nav-pills > li.active > a:hover,
+#sidebar.nav-pills > li.active > a:focus {
+    color: #0000FF;
+    background-color: #C72A25;
 }
