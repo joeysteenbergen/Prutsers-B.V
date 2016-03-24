@@ -10,6 +10,18 @@
 
 </head>
 <body>
+<?php
+
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'webshop';
+$link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
+
+$alleRecords = "SELECT * FROM categorieen";
+$resultAlleRecords = mysqli_query($link, $alleRecords);
+
+?>
 <div class="container-fluid">
     <div class="row">
         <header class="col-md-12 head">
@@ -29,10 +41,15 @@
             <ul id="sidebar" class="nav nav-pills nav-stacked>
         <h1 class="">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">Catogorieën</a></li>
-                <li><a href="#">Menu 1</a></li>
-                <li><a href="#">Menu 2</a></li>
-                <li><a href="#">Menu 3</a></li>
+                <?php
+                if (mysqli_num_rows($resultAlleRecords) > 0) {
+                    while ($rij = mysqli_fetch_row($resultAlleRecords)) {
+                        ?>
+                        <li><a><?php echo $rij[1] ?></a></li>
+                        <?php
+                    }
+                }
+                ?>
             </ul>
         </div>
     <div class="col-md-10 strech">
