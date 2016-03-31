@@ -47,42 +47,32 @@ $Query = mysqli_query($link, $allRecords);
 
 ?>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="col-xs-4">
-            </div>
-        <div class="col-xs-4">
-            <div class="login">
-                <div class="login-triangle">
-                </div>
-                <div class="login-header">
-                    <h2>Registreren</h2>
-                </div>
-                <form method="post" action="RegisterPage.php" class="login-container">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="voornaam" placeholder="Voornaam"><br/>
-                        <input class="form-control" type="text" name="achternaam" placeholder="Achternaam"><br/>
-                        <input class="form-control" type="text" name="straat" placeholder="Straat"><br/>
-                        <input class="form-control" type="text" name="nummer" placeholder="Nr"><br/>
-                        <input class="form-control" type="text" name="postcode" placeholder="Postcode"><br/>
-                        <input class="form-control" type="text" name="woonplaats" placeholder="Woonplaats"><br/>
-                        <input class="form-control" type="text" name="land" placeholder="Land"><br/>
-                        <input class="form-control" type="email" name="email" placeholder="Email"><br/>
-                        <input class="form-control" type="password" name="wachtwoord" placeholder="Wachtwoord"><br/>
-                        <input class="form-control" type="tel" name="telefoonnummer" placeholder="Telefoonnummer"><br/>
-                        <div class="radio">
-                            <label><input type="radio" name="radioBtn" value="Man" checked/>Man</label>
-                            <label><input type="radio" name="radioBtn" value="Vrouw"/>Vrouw</label></br>
-                        </div>
-                        <input type="submit" name="submit" value="Registreren" class="btn btn-primary" >
-                    </div>
-                    <p style="margin:auto;"><a style="color:#28d;" href="#">Heb je al een account? Log hier in!</a></p>
-                </form>
-            </div>
-        </div>
-        <div class="colo-xs-4">
-            </div>
+<div class="login">
+    <div class="login-triangle">
     </div>
+    <div class="login-header">
+        <h2>Registreren</h2>
+    </div>
+    <form method="post" action="RegisterPage.php" class="login-container">
+        <p><input class="form-control" type="text" name="voornaam" placeholder="Voornaam"></p>
+        <p><input class="form-control" type="text" name="achternaam" placeholder="Achternaam"></p>
+        <p><input class="form-control" type="text" name="straat" placeholder="Straat"></p>
+        <p><input class="form-control" type="text" name="nummer" placeholder="Nr"></p>
+        <p><input class="form-control" type="text" name="postcode" placeholder="Postcode"></p>
+        <p><input class="form-control" type="text" name="woonplaats" placeholder="Woonplaats"></p>
+        <p><input class="form-control" type="text" name="land" placeholder="Land"></p>
+        <p><input class="form-control" type="email" name="email" placeholder="Email"></p>
+        <p><input class="form-control" type="password" name="wachtwoord" placeholder="Wachtwoord"></p>
+        <p><input class="form-control" type="tel" name="telefoonnummer" placeholder="Telefoonnummer"></p>
+        <label class="radio-inline">
+            <input type="radio" name="radioBtn" value="Man" checked/>Man
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="radioBtn" value="Vrouw"/>Vrouw
+        </label><br/>
+        <input type="submit" name="submit" value="Registreren" class="btn btn-primary" >
+        <p style="margin:auto;"><a style="color:#28d;" href="#">Heb je al een account? Log hier in!</a></p>
+    </form>
 </div>
 </body>
 </html>

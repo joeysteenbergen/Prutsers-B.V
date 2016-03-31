@@ -20,12 +20,21 @@ $resultAlleRecords = mysqli_query($link, $alleRecords);
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
+                <?php
+                if (mysqli_num_rows($resultAlleRecords) > 0)
+                {
+                    while ($rij = mysqli_fetch_row($resultAlleRecords))
+                    {
+                        ?>
+                        <div class="item active">
+                            <img src="img_chania.jpg" alt="Chania">
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                <li data-target="#myCarousel" data-slide-to="3"></li>
             </ol>
-
             <div class="carousel-inner" role="listbox">
                 <?php
                 if (mysqli_num_rows($resultAlleRecords) > 0)

@@ -22,39 +22,70 @@ $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
 
 ?>
+<div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="height:100%;">
+        <div class="modal-content" style="height:100%;">
+            <div class="modal-body" style="height:100%;">
+                <iframe style="height:100%; width:100%;" frameborder="0" src="gebruiker/LoginPage.php">
+
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" style="height:100%;" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="height:100%;">
+        <div class="modal-content" style="height:100%;">
+            <div class="modal-body" style="height:100%;">
+                <iframe style="height:100%; width:100%;" frameborder="0" src="gebruiker/RegisterPage.php">
+
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- page -->
 <div class="container-fluid">
     <div class="row">
-        <header class="col-md-12 head">
-            <img class="headerImgage" src="Images/LogoWebshop2.png" alt=""/>
-        <!-- <h1 class="rotate">Wij verkopen rotzooi!</h1>-->
-        </header>
+        <div class="col-xs-12 head">
+            <img class="headerImage" src="Images/LogoWebshop2.png" alt=""/>
+        </div>
     </div>
     <div class="row">
-        <ul class="nav nav-pills menuExtra">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
+        <div class="col-xs-12">
+            <ul class="nav nav-pills menuExtra">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Contact</a></li>
+                <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
+                <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
+            </ul>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-2 strech">
-            <ul id="sidebar" class="nav nav-pills nav-stacked>
-        <h1 class="">
-            <ul class="nav nav-pills nav-stacked">
+        <div class="col-xs-2 stretch">
+            <table class="table table-bordered table-responsive">
+                <tr style="border-bottom:1px solid black">
+                    <th style="background-color: #337ab7; color:white;">Categorieën</th>
+                </tr>
                 <?php
                 if (mysqli_num_rows($resultAlleRecords) > 0) {
                     while ($rij = mysqli_fetch_row($resultAlleRecords)) {
                         ?>
-                        <li><a><?php echo $rij[1] ?></a></li>
+                        <tr>
+                            <td>
+                                <a><?php echo $rij[1] ?></a>
+                            </td>
+                        </tr>
                         <?php
                     }
                 }
                 ?>
-            </ul>
+            </table>
         </div>
-    <div class="col-md-10 strech">
+        <div class="col-xs-10 stretch">
 
-    </div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

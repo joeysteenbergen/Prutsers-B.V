@@ -9,7 +9,7 @@ body{
     background-size: cover;
     position: relative;
 }
-.headerImgage{
+.headerImage{
     height: 14vw;
 }
 .rotate{
@@ -22,7 +22,7 @@ body{
 .menuExtra{
     padding: 10px;
 }
-.strech{
+.stretch{
     height: 100vh;
 }
 /* navbar css */
