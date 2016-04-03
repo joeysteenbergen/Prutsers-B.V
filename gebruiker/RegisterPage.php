@@ -71,7 +71,7 @@ $Query = mysqli_query($link, $allRecords);
             <input type="radio" name="radioBtn" value="Vrouw"/>Vrouw
         </label><br/>
         <input type="submit" name="submit" value="Registreren" class="btn btn-primary" >
-        <p style="margin:auto;"><a style="color:#28d;" href="#">Heb je al een account? Log hier in!</a></p>
+        <p style="margin:auto;"><a style="color:#28d;" href="LoginPage.php">Heb je al een account? Log hier in!</a></p>
     </form>
 </div>
 </body>

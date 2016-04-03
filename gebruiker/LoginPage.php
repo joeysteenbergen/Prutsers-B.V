@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
             <p><input type="email" name="email" placeholder="Email"></p>
             <p><input type="password" name="wachtwoord" placeholder="Wachtwoord"></p>
             <p><input type="submit" name="submit" value="Log in"></p>
-            <p style="margin:auto;"><a style="color:#28d;" href="#">Nog geen account? registreer nu!</a></p>
+            <p style="margin:auto;"><a style="color:#28d;" href="RegisterPage.php">Nog geen account? registreer nu!</a></p>
         </form>
     </div>
 </body>

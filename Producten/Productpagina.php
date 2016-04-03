@@ -52,7 +52,7 @@ $resultAlleRecords = mysqli_query($link, $alleRecords);
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <div class="col-xs-3">
-                                                            <img src="../Images/Producten/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
+                                                            <img src="Producten/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
                                                         </div>
                                                         <div class="col-xs-9">
                                                             <div class="col-xs-12">
