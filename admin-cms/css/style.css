@@ -3,12 +3,37 @@ html, body {
 }
 
 .container-fluid {
-    background-color: #1b6d85;
-    height: 100%;
-    padding: 0;
-    overflow: hidden;
+    /*background-color: #1b6d85;*/
+    /*overflow-x: ;*/
+    /*padding: 0;*/
+    /*overflow: hidden;*/
 }
 
 .stretch {
     height: 100%;
+    background-color: #1b6d85;
+}
+
+.panel-scrollable {
+    overflow-y: scroll;
+}
+
+/* make sidebar nav vertical */
+@media (min-width: 768px) {
+    .sidebar-nav .navbar .navbar-collapse {
+        padding: 0;
+        max-height: none;
+    }
+    .sidebar-nav .navbar ul {
+        float: none;
+        display: block;
+    }
+    .sidebar-nav .navbar li {
+        float: none;
+        display: block;
+    }
+    .sidebar-nav .navbar li a {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
 }

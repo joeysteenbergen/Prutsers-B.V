@@ -1,15 +1,26 @@
 <?php
-// extract the filename
-$title = basename($_SERVER['SCRIPT_FILENAME'], '.php');
+include_once("constants/fetchPageTitle.php");
+$message = "";
 
-// replace dashes with whitespace
-$title = str_replace('_', ' ', $title);
-// check if the file is index, if so assign 'home' to the title instead of index
-if (strtolower($title) == 'index') {
-    $title = 'home';
+if(isset($_POST['submit']))
+{
+    include("constants/connect.php");
+    $sql = 'SELECT email, wachtwoord, voornaam FROM gebruikers WHERE email="'. $_POST["email"].'" and wachtwoord = "'. $_POST["wachtwoord"].'"';
+    $res = mysqli_query($conn, $sql);
+    $rij = mysqli_fetch_array($res);
+    if(is_array($rij))
+    {
+        $_SESSION['voornaam'] = $rij['voornaam'];
+        $_SESSION['login'] = true;
+    }
+    else {
+        $message = "Gebruikersnaam en/of wachtwoord klopt niet.";
+    }
 }
-// capitalize all words
-$title = ucwords($title);
+if($_SESSION['login'] == true)
+{
+    header("Location:php06_bedrijf_index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,22 +45,23 @@ $title = ucwords($title);
 <body>
 <div class="container">
     <div class="card card-container">
-        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+<!--        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />-->
+        <img id="profile-img" class="profile-img-card" src="uploads/anon_user.png" />
         <p id="profile-name" class="profile-name-card"></p>
-        <form class="form-signin">
+        <form class="form-signin" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email addres" required autofocus>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Wachtwoord" required>
+            <div class="message"><?php if($message!="") { echo $message; } ?></div>
             <div id="remember" class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Inloggen</button>
         </form><!-- /form -->
         <a href="#" class="forgot-password">
-            Forgot the password?
+            Wachtwoord vergeten?
         </a>
     </div><!-- /card-container -->
 </div><!-- /container -->
