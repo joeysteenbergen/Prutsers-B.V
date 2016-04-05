@@ -6,7 +6,13 @@
     <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="index.css" type="text/css" rel="stylesheet">
-<title>Untitled Document</title>
+<title>Webshop</title>
+
+<script type="text/javascript">
+    function SearchID(id) {
+        window.location.href = "Producten/Productpagina.php?categorie=" + id;
+    }
+</script>
 
 </head>
 <body>
@@ -20,6 +26,16 @@ $link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
 
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
+
+if(isset($_POST["zoeken"]))
+{
+    session_start();
+    $zoekresultaat = $_POST["zoekenText"];
+
+    $_SESSION["zoek"] = $zoekresultaat;
+    header("Location: Producten/Productpagina.php");
+    exit();
+}
 
 ?>
 <div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,11 +88,11 @@ $resultAlleRecords = mysqli_query($link, $alleRecords);
                             <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Zoeken">
+                        <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
+                            <div class="form-group" style="width:300px; margin-left:200px;">
+                                <input type="text" style="width:100%;"; class="form-control" name="zoekenText" placeholder="Zoeken">
                             </div>
-                            <button type="submit" class="btn btn-default">Zoeken</button>
+                            <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
                             <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
@@ -89,14 +105,14 @@ $resultAlleRecords = mysqli_query($link, $alleRecords);
     </div>
     <div class="row">
         <div class="col-xs-2 stretch">
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default" style="border-radius:5px;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li>Categorieën</li>
+                    <li style="border:1px solid #0000FF; background-color:#0000FF; color:white; font-weight:bold; text-align:center;">Categorieën</li>
                     <?php
                     if (mysqli_num_rows($resultAlleRecords) > 0) {
                         while ($rij = mysqli_fetch_row($resultAlleRecords)) {
                             ?>
-                            <li><?php echo $rij[1] ?></li>
+                            <li><a href="javascript:SearchID(<?php echo $rij[0]; ?>)"><?php echo $rij[1] ?></a></li>
                             <?php
                         }
                     }
