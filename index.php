@@ -24,18 +24,37 @@ $pass = '';
 $db = 'webshop';
 $link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
 
+session_start();
+
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
 
+if(isset($_SESSION['totaalProducten']))
+{
+    if($_SESSION['totaalProducten'] == null)
+    {
+        $aantalProducten = 0;
+    }
+
+    elseif($_SESSION['totaalProducten'] != null)
+    {
+       $aantalProducten = $_SESSION['totaalProducten'];
+    }
+}
+
+else
+{
+    $aantalProducten = 0;
+}
+
 if(isset($_POST["zoeken"]))
 {
-    session_start();
     $zoekresultaat = $_POST["zoekenText"];
-
     $_SESSION["zoek"] = $zoekresultaat;
     header("Location: Producten/Productpagina.php");
     exit();
 }
+
 
 ?>
 <div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -97,6 +116,7 @@ if(isset($_POST["zoeken"]))
                         <ul class="nav navbar-nav navbar-right">
                             <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
                             <li role="presentation"><a href="#" data-href="gebruiker/RegisterPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
+                            <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->

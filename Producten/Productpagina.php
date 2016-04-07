@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link href="index.css" type="text/css" rel="stylesheet">
+    <link href="productpagina.css" type="text/css" rel="stylesheet">
     <title>Webshop</title>
 
 </head>
@@ -21,12 +21,10 @@ $link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
 session_start();
 $zoek = $_SESSION['zoek'];
 
-$Id = 0;
-
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
 
-if(isset($_GET['categorie']) && $_GET['categorie'] != null)
+if(isset($_GET['categorie']))
 {
     $productRecords = "SELECT * FROM producten WHERE CategorieID = '".$_GET['categorie']."'";
     $resultProductRecords = mysqli_query($link, $productRecords);
@@ -36,6 +34,34 @@ if(isset($zoek))
 {
     $zoekRecords = "SELECT * FROM producten WHERE ProductNaam LIKE '%{$zoek}%' OR ProductTags LIKE '%{$zoek}%'";
     $resultZoekRecords = mysqli_query($link, $zoekRecords);
+}
+
+if(isset($_POST['bestellen']))
+{
+    if($_SESSION['totaalProducten'] == null)
+    {
+        $aantalProducten = 0;
+    }
+
+    elseif($_SESSION['totaalProducten'] != null)
+    {
+        $aantalProducten = $_SESSION['totaalProducten'];
+        $aantalProducten++;
+        $_SESSION['totaalProducten'] = $aantalProducten;
+    }
+}
+
+if(isset($_SESSION['totaalProducten']))
+{
+    if($_SESSION['totaalProducten'] == null)
+    {
+        $aantalProducten = 0;
+    }
+
+    elseif($_SESSION['totaalProducten'] != null)
+    {
+        $aantalProducten = $_SESSION['totaalProducten'];
+    }
 }
 ?>
 <div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -85,7 +111,7 @@ if(isset($zoek))
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                            <li><a href="../index.php">Home <span class="sr-only">(current)</span></a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                         <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
@@ -97,6 +123,7 @@ if(isset($zoek))
                         <ul class="nav navbar-nav navbar-right">
                             <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
                             <li role="presentation"><a href="#" data-href="gebruiker/RegisterPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
+                            <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
@@ -105,14 +132,16 @@ if(isset($zoek))
     </div>
     <div class="row">
         <div class="col-xs-2 stretch">
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default" style="border-radius:5px;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li>Categorieën</li>
+                    <li style="border:1px solid #0000FF; background-color:#0000FF; color:white; font-weight:bold; text-align:center;">Categorieën</li>
                     <?php
-                    if (mysqli_num_rows($resultAlleRecords) > 0) {
-                        while ($rij = mysqli_fetch_row($resultAlleRecords)) {
+                    if (mysqli_num_rows($resultAlleRecords) > 0)
+                    {
+                        while ($rij = mysqli_fetch_row($resultAlleRecords))
+                        {
                             ?>
-                            <li><?php echo $rij[1] ?></li>
+                            <li><a href="javascript:SearchID(<?php echo $rij[0]; ?>)"><?php echo $rij[1] ?></a></li>
                             <?php
                         }
                     }
@@ -125,46 +154,45 @@ if(isset($zoek))
                 <div class="col-xs-12">
                     <div class="ProductBlock">
                         <?php
-                        if (mysqli_num_rows($resultProductRecords) != null) {
-                            while ($rij = mysqli_fetch_row($resultProductRecords)) {
-                                ?>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="col-xs-1">
-                                        </div>
-                                        <div class="col-xs-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading" style="background-color: #6CCAEA; !important; background-image: none !important;">
+                        if(isset($_GET['categorie']))
+                        {
+                            if (mysqli_num_rows($resultProductRecords) != null) {
+                                while ($rij = mysqli_fetch_row($resultProductRecords)) {
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="col-xs-1">
+                                            </div>
+                                            <div class="col-xs-10">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading"
+                                                         style="background-color: #6CCAEA; !important; background-image: none !important;">
 
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="col-xs-3">
-                                                                <img src="Producten/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
-                                                            </div>
-                                                            <div class="col-xs-9">
-                                                                <div class="col-xs-12">
-                                                                    <div class="col-xs-6">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>Product ID:</td>
-                                                                                <td><?php echo $rij[0] ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Naam:</td>
-                                                                                <td><?php echo $rij[1] ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Kleur:</td>
-                                                                                <td><?php echo $rij[9] ?></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="col-xs-6">
-                                                                        <h1>Prijs: € <?php echo $rij[2]?>,-</h1>
-                                                                        <br/>
-                                                                        <button class="btn btn default" style="background-color: #0000FF; color:#FFFFFF;">In winkelmandje <span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-3">
+                                                                    <img src="ProductImages/badeendgeeldr1.jpg"
+                                                                         style="border:1px solid black; height:150px; width:150px;"/>
+                                                                </div>
+                                                                <div class="col-xs-9">
+                                                                    <div class="col-xs-12">
+                                                                        <form action="" method="post">
+                                                                            <div class="col-xs-6">
+                                                                                <label>ID: <input style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
+                                                                                <label>Naam: <input style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
+                                                                                <label>Kleur: <input
+                                                                                        style="border:none;" readonly required value="<?php echo $rij[9] ?>"/></label>
+                                                                            </div>
+                                                                            <div class="col-xs-6">
+                                                                                <label>Prijs: €<input style="border:none; width:auto;" readonly required value="<?php echo $rij[2] ?>,-"/></label>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                <button name="bestellen" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-shopping-cart"></i> In winkelwagen</button>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -172,65 +200,60 @@ if(isset($zoek))
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-1">
+                                            <div class="col-xs-1">
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <?php
+                                }
+                            }
 
-
-                                <?php
+                            else
+                            {
+                                echo "Geen producten gevonden";
                             }
                         }
 
-                        elseif(mysqli_num_rows($resultZoekRecords) > 0) {
-                            while ($rij = mysqli_fetch_row($resultZoekRecords)) {
+                        elseif(isset($zoek))
+                        {
+                            if (mysqli_num_rows($resultZoekRecords) > 0) {
+                                while ($rij = mysqli_fetch_row($resultZoekRecords)) {
 
-                                ?>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="col-xs-1">
-                                        </div>
-                                        <div class="col-xs-10">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading"
-                                                     style="background-color: #6CCAEA; !important; background-image: none !important;">
-
-                                                </div>
-                                                <div class="panel-body">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="col-xs-3">
-                                                                <img src="Producten/badeendgeeldr1.jpg"
-                                                                     style="border:1px solid black; height:150px; width:150px;"/>
-                                                            </div>
-                                                            <div class="col-xs-9">
-                                                                <div class="col-xs-12">
-                                                                    <div class="col-xs-6">
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>Product ID:</td>
-                                                                                <td><?php echo $rij[0] ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Naam:</td>
-                                                                                <td><?php echo $rij[1] ?></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Kleur:</td>
-                                                                                <td><?php echo $rij[9] ?></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="col-xs-6">
-                                                                        <h1>Prijs: € <?php echo $rij[2] ?>,-</h1>
-                                                                        <br/>
-                                                                        <button class="btn btn default"
-                                                                                style="background-color: #0000FF; color:#FFFFFF;">
-                                                                            In winkelmandje <span
-                                                                                class="glyphicon glyphicon-shopping-cart"></span>
-                                                                        </button>
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="col-xs-1">
+                                            </div>
+                                            <div class="col-xs-10">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading"
+                                                         style="background-color: #6CCAEA; !important; background-image: none !important;">
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="col-xs-3">
+                                                                    <img src="ProductImages/badeendgeeldr1.jpg"
+                                                                         style="border:1px solid black; height:150px; width:150px;"/>
+                                                                </div>
+                                                                <div class="col-xs-9">
+                                                                    <div class="col-xs-12">
+                                                                        <form action="" method="post">
+                                                                            <div class="col-xs-6">
+                                                                                <label>Product ID: <input style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
+                                                                                <label>Naam: <input style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
+                                                                                <label>Kleur: <input
+                                                                                        style="border:none;" readonly required value="<?php echo $rij[9] ?>"/></label>
+                                                                            </div>
+                                                                            <div class="col-xs-6">
+                                                                                <label>Prijs: €<input style="border:none; width:auto;" readonly required value="<?php echo $rij[2] ?>,-"/></label>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                <button name="bestellen" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-shopping-cart"></i> In winkelwagen</button>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -238,13 +261,18 @@ if(isset($zoek))
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-1">
+                                            <div class="col-xs-1">
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <?php
+                                    <?php
+                                }
+                            }
+
+                            else
+                            {
+                                echo "Geen producten gevonden";
                             }
                         }
 
