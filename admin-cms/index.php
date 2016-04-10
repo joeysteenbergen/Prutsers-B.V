@@ -1,57 +1,30 @@
-<?php include_once('includes/bodystart.php') ?>
+<?php 
+session_start();
+include_once('includes/bodystart.php');
+?>
 
-<div class="container-fluid">
-    <div class="row">
-        <header>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar navbar-default">
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                                <li><a href="#">Link</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">One more separated link</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <form class="navbar-form navbar-left" role="search">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </form>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#">Link</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
-                    </div>
-                </div>
-            </div>
-        </header>
-        <div class="col-md-2">
-            <?php include_once('includes/sidemenu.php')?>
-        </div>
+    <nav class="navbar navbar-default no-margin">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header fixed-brand">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+            </button>
+            <a class="navbar-brand" href="index.php"><i class="fa fa-rocket fa-4"></i> Naar hoofdpagina</a>
+        </div><!-- navbar-header-->
 
-        <div class="col-md-10">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+            </ul>
+        </div><!-- bs-example-navbar-collapse-1 -->
+    </nav>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <?php include_once('includes/sidemenu.php')?>
+
+        <!-- Page Content -->
+        <div class="container-fluid xyz scroll">
             <?php
             if(!empty($_GET['page']))
             {
@@ -64,11 +37,9 @@
                 }
             }
             else {
-                echo "error - page not found";
+                echo "Welkom";
             }
             ?>
         </div>
     </div>
-</div>
-
 <?php include_once('includes/bodyclose.php') ?>
