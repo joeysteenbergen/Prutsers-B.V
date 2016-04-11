@@ -36,12 +36,18 @@ if(isset($_SESSION['zoek']))
     $resultZoekRecords = mysqli_query($link, $zoekRecords);
 }
 
+if(!isset($_SESSION['lijstProducten'] ))
+{
+    $_SESSION['lijstProducten'] = array();
+}
+
 if(isset($_POST['bestellen']))
 {
     if($_SESSION['totaalProducten'] == null)
     {
         $aantalProducten = 0;
-        $aantalProducten++;
+//        $aantalProducten++;
+        $aantalProducten += $_POST['aantal'];
         $_SESSION['totaalProducten'] = $aantalProducten;
     }
 
@@ -51,6 +57,9 @@ if(isset($_POST['bestellen']))
         $aantalProducten++;
         $_SESSION['totaalProducten'] = $aantalProducten;
     }
+
+    $_SESSION['lijstProducten'][] = array('ID' => $_POST['productID'], 'Naam' => $_POST['naam'], 'Prijs' => $_POST['prijs'], 'Aantal' => $_POST['aantal']);
+    var_dump($_SESSION['lijstProducten']);
 }
 
 if(isset($_SESSION['totaalProducten']))
@@ -183,17 +192,24 @@ if(isset($_SESSION['totaalProducten']))
                                                                     <div class="col-xs-12">
                                                                         <form action="" method="post">
                                                                             <div class="col-xs-6">
-                                                                                <label>ID: <input style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
-                                                                                <label>Naam: <input style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
+                                                                                <label>ID: <input name="productID" style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
+                                                                                <label>Naam: <input name="naam" style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
                                                                                 <label>Kleur: <input
                                                                                         style="border:none;" readonly required value="<?php echo $rij[9] ?>"/></label>
                                                                             </div>
                                                                             <div class="col-xs-6">
-                                                                                <label>Prijs: €<input style="border:none; width:auto;" readonly required value="<?php echo $rij[2] ?>,-"/></label>
+                                                                                <label>Prijs: €<input name="prijs" style="border:none; width:auto;" readonly required value="<?php echo $rij[2] ?>,-"/></label>
                                                                                 <br/>
                                                                                 <br/>
                                                                                 <br/>
-                                                                                <button name="bestellen" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-shopping-cart"></i> In winkelwagen</button>
+                                                                                <div class="input-group">
+                                                                                    <input name="aantal" value="1" min="1" class="form-control" placeholder="Aantal producten" type="number">
+                                                                                    <span class="input-group-btn">
+                                                                                        <button name="bestellen" type="submit" class="btn btn-primary">
+                                                                                            <span class="glyphicon glyphicon-shopping-cart"></span> In winkelwagen</button>
+                                                                                    </span>
+                                                                                </div>
+<!--                                                                                <button name="bestellen" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-shopping-cart"></i> In winkelwagen</button>-->
                                                                             </div>
                                                                         </form>
                                                                     </div>
