@@ -29,7 +29,7 @@ if(isset($_GET['categorie']))
     $resultProductRecords = mysqli_query($link, $productRecords);
 }
 
-if(isset($zoek))
+if(isset($_SESSION['zoek']))
 {
     $zoek = $_SESSION['zoek'];
     $zoekRecords = "SELECT * FROM producten WHERE ProductNaam LIKE '%{$zoek}%' OR ProductTags LIKE '%{$zoek}%'";
