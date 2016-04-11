@@ -127,7 +127,7 @@ if(isset($_POST["zoeken"]))
         <div class="col-xs-2 stretch">
             <nav class="navbar navbar-default" style="border-radius:5px;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li style="border:1px solid #0000FF; background-color:#0000FF; color:white; font-weight:bold; text-align:center;">Categorieën</li>
+                    <li style="border:1px solid #6CCAEA; background-color:#6CCAEA; color:white; font-weight:bold; text-align:center;">Categorieën</li>
                     <?php
                     if (mysqli_num_rows($resultAlleRecords) > 0) {
                         while ($rij = mysqli_fetch_row($resultAlleRecords)) {

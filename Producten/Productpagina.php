@@ -19,7 +19,6 @@ $db = 'webshop';
 $link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
 
 session_start();
-$zoek = $_SESSION['zoek'];
 
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
@@ -32,6 +31,7 @@ if(isset($_GET['categorie']))
 
 if(isset($zoek))
 {
+    $zoek = $_SESSION['zoek'];
     $zoekRecords = "SELECT * FROM producten WHERE ProductNaam LIKE '%{$zoek}%' OR ProductTags LIKE '%{$zoek}%'";
     $resultZoekRecords = mysqli_query($link, $zoekRecords);
 }
@@ -41,6 +41,8 @@ if(isset($_POST['bestellen']))
     if($_SESSION['totaalProducten'] == null)
     {
         $aantalProducten = 0;
+        $aantalProducten++;
+        $_SESSION['totaalProducten'] = $aantalProducten;
     }
 
     elseif($_SESSION['totaalProducten'] != null)
@@ -134,7 +136,7 @@ if(isset($_SESSION['totaalProducten']))
         <div class="col-xs-2 stretch">
             <nav class="navbar navbar-default" style="border-radius:5px;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li style="border:1px solid #0000FF; background-color:#0000FF; color:white; font-weight:bold; text-align:center;">Categorieën</li>
+                    <li style="border:1px solid #6CCAEA; background-color:#6CCAEA; color:white; font-weight:bold; text-align:center;">Categorieën</li>
                     <?php
                     if (mysqli_num_rows($resultAlleRecords) > 0)
                     {
@@ -173,8 +175,9 @@ if(isset($_SESSION['totaalProducten']))
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <div class="col-xs-3">
-                                                                    <img src="ProductImages/badeendgeeldr1.jpg"
-                                                                         style="border:1px solid black; height:150px; width:150px;"/>
+                                                                    <p class="image">
+                                                                        <img src="ProductImages/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
+                                                                    </p>
                                                                 </div>
                                                                 <div class="col-xs-9">
                                                                     <div class="col-xs-12">
