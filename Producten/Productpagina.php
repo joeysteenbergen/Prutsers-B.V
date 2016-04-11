@@ -176,7 +176,7 @@ if(isset($_SESSION['totaalProducten']))
                                                             <div class="col-xs-12">
                                                                 <div class="col-xs-3">
                                                                     <p class="image">
-                                                                        <img src="ProductImages/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
+                                                                        <img src="../uploads/badeendgeeldr1.jpg" style="border:1px solid black; height:150px; width:150px;"/>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-xs-9">
@@ -237,7 +237,7 @@ if(isset($_SESSION['totaalProducten']))
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <div class="col-xs-3">
-                                                                    <img src="ProductImages/badeendgeeldr1.jpg"
+                                                                    <img src="../ProductImages/badeendgeeldr1.jpg"
                                                                          style="border:1px solid black; height:150px; width:150px;"/>
                                                                 </div>
                                                                 <div class="col-xs-9">

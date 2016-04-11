@@ -46,7 +46,7 @@ if($_SESSION['login'] == true)
 <div class="container">
     <div class="card card-container">
 <!--        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />-->
-        <img id="profile-img" class="profile-img-card" src="uploads/anon_user.png" />
+        <img id="profile-img" class="profile-img-card" src="userImages/anon_user.png" />
         <p id="profile-name" class="profile-name-card"></p>
         <form class="form-signin" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <span id="reauth-email" class="reauth-email"></span>

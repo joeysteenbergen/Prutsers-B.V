@@ -3,6 +3,28 @@ include_once("constants/connect.php");
 $sql_fetch_categories = "SELECT * FROM `categorieen`";
 $res = mysqli_query($conn, $sql_fetch_categories);
 
+if(isset($_POST['toevoegen']))
+{
+
+   $categorieID = substr($_POST['categorielijst'], 0, 1);
+   move_uploaded_file($_FILES['productfoto']['tmp_name'], "../uploads" . $_FILES['productfoto']['name']);
+   $uploadPath = '/uploads' . $_FILES['productfoto']['name'];
+    $productAantal = 1;
+
+   if(isset($_POST['productaanbieding']) && $_POST['productaanbieding'] == "Yes")
+   {
+       $isAanbieding = 1;
+   }
+   else
+   {
+       $isAanbieding = 0;
+   }
+
+   $sql = "INSERT INTO producten VALUES ('".''."', '".$_POST['productnaam']."', '".$_POST['productprijs']."', '".$_POST['productomschrijvingkort']."', '".$_POST['productomschrijvinglang']."', '".$_POST['producttags']."', '".$uploadPath."', '".$categorieID."', '".$productAantal."', '".$_POST['productkleur']."', '".$_POST['productvoorraad']."', '".$isAanbieding."')";
+   $res = mysqli_query($conn, $sql);
+
+    header("Location:?page=product_toevoegen");
+}
 
 ?>
     <div class="row">
@@ -12,7 +34,7 @@ $res = mysqli_query($conn, $sql_fetch_categories);
                     <h3 class="panel-title">Product toevoegen</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="post" action="product_toevoegen_post.php" enctype="multipart/form-data">
+                    <form method="post" action="" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="categorielist">Selecteer categorie</label>
                             <select class="form-control" id="categorielijst" name="categorielijst">
@@ -40,7 +62,7 @@ $res = mysqli_query($conn, $sql_fetch_categories);
 
                         <div class="form-group">
                             <label for="productaantal">Aantal in opslag</label>
-                            <input type="text" class="form-control" id="productaantal" name="productaantal" placeholder="Aantal producten" required>
+                            <input type="text" class="form-control" id="productaantal" name="productvoorraad" placeholder="Aantal producten" required>
                         </div> <!-- Productaantal end -->
 
                         <div class="form-group">

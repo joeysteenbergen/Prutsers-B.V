@@ -1,135 +1,84 @@
-<?php include_once("includes/bodystart.php"); ?>
-    <h1>ZWIK2</h1>
+<?php
+    include_once("includes/bodystart.php");
+    include_once("constants/connect.php");
 
+$sql_fetch_producten = "SELECT * FROM producten";
+$res = mysqli_query($conn, $sql_fetch_producten);
+?>
+<div class="row">
+    <div class="col-xs-6">
+        <?php
 
-    <div class="wrap">
-        <div class="main2">
-            <div class="flexform">
-                <div class="col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Product toevoegen</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form method="post" action="">
-                                <div class="form-group">
-                                    <label for="categorielist">Selecteer categorie</label>
-                                    <select class="form-control" id="categorielist">
-                                        <?php
-                                        if(mysqli_num_rows($res) > 0)
-                                        {
-                                            while ($rij = mysqli_fetch_row($res))
-                                            {
-                                                echo '<option>'.$rij[1].'</option>';
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div> <!-- Categorie end -->
+        echo "<table class='table table-striped'>"
+            . "<tr>"
+            . "<th>" . "ID" . "</th>"
+            . "<th>" . "Naam" . "</th>"
+            . "<th>" . "Prijs" . "</th>"
+            . "<th>" . "Korte omschrijving" . "</th>"
+            . "<th>" . "Lange omschrijving" . "</th>"
+            . "<th>" . "Tags" . "</th>"
+            . "<th>" . "Afbeelding" . "</th>"
+            . "<th>" . "Categorie" . "</th>"
+            . "<th>" . "Aantal" . "</th>"
+            . "<th>" . "Kleur" . "</th>"
+            . "<th>" . "Voorraad" . "</th>"
+            . "<th>" . "Aanbieding" . "</th>"
+            . "<th></th>"
+            ."<th></th>"
+            . "</tr>";
 
-                                <div class="form-group">
-                                    <label for="productname">Naam</label>
-                                    <input type="text" class="form-control" id="productname" placeholder="Naam product" required>
-                                </div> <!-- Productname end -->
-
-                                <div class="form-group">
-                                    <label for="productprijs">Prijs</label>
-                                    <input type="text" class="form-control" id="productprijs" placeholder="Prijs product" required>
-                                </div> <!-- Productprijs end -->
-
-                                <div class="form-group">
-                                    <label for="productomschrijvingkort">Omschrijving kort</label>
-                                    <textarea class="form-control" rows="2" id="productomschrijvingkort" required></textarea>
-                                </div> <!-- Productomschrijvingkort end -->
-
-                                <div class="form-group">
-                                    <label for="productomschrijvinglang">Omschrijving lang</label>
-                                    <textarea class="form-control" rows="4" id="productomschrijvinglang" required></textarea>
-                                </div> <!-- Productomschrijvinglang end -->
-
-                                <div class="form-group">
-                                    <label for="producttags">Tags (komma en spatie gescheiden)</label>
-                                    <textarea class="form-control" rows="1" id="producttags" required></textarea>
-                                </div> <!-- Producttags end -->
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container-fluid">
-        <div class="row">
-            <header>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="navbar navbar-default">
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <ul class="nav navbar-nav">
-                                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                                    <li><a href="#">Link</a></li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#">One more separated link</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <form class="navbar-form navbar-left" role="search">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Submit</button>
-                                </form>
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li><a href="#">Link</a></li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div><!-- /.navbar-collapse -->
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <div class="col-md-2">
-                <?php include_once('includes/sidemenu.php')?>
-            </div>
-
-            <div class="col-md-10">
-                <?php
-                if(!empty($_GET['page']))
-                {
-                    if(!file_exists($_GET['page'].".php"))
-                    {
-                        echo "error - page not found";
-                    }
-                    else {
-                        include($_GET['page'].".php");
-                    }
-                }
-                else {
-                    echo "error - page not found";
-                }
+        if (mysqli_num_rows($res) > 0) {
+            while ($rij = mysqli_fetch_row($res)) {
                 ?>
-            </div>
-        </div>
+                <tr>
+                    <td>
+                        <?php echo $rij[0] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[1] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[2] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[3] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[4] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[5] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[6] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[7] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[8] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[9] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[10] ?>
+                    </td>
+                    <td>
+                        <?php echo $rij[11] ?>
+                    </td>
+                    <td><a href="javascript:edit_id(<?php echo $rij[0]; ?>)"> Wijzigen </a></td>
+                    <td><a href="javascript:delete_id(<?php echo $rij[0]; ?>)"> Verwijder </a></td>
+                </tr>
+                <?php
+            }
+        } else {
+            echo "<p>" . "Geen data gevonden" . "</p>";
+        }
+        echo "</table>";
+        ?>
     </div>
+</div>
 
 
 

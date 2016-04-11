@@ -3,6 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="jquery.bxslider.js"></script>
+    <script src="jquery.bxslider.min.js"></script>
+    <link href="jquery.bxslider.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="index.css" type="text/css" rel="stylesheet">
@@ -28,6 +32,9 @@ session_start();
 
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
+
+$sliderRecords = "SELECT * FROM producten WHERE Aanbieding = '1'";
+$sliderResults = mysqli_query($link, $sliderRecords);
 
 if(isset($_SESSION['totaalProducten']))
 {
@@ -57,6 +64,13 @@ if(isset($_POST["zoeken"]))
 
 
 ?>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.bxslider').bxSlider();
+    });
+</script>
+
 <div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="height:100%;">
         <div class="modal-content" style="height:100%;">
@@ -141,11 +155,28 @@ if(isset($_POST["zoeken"]))
             </nav>
         </div>
         <div class="col-xs-10 stretch">
-
+            <div class="col-xs-4">
+                <div style="border:1px black solid";>
+                    <div style="border:1px black solid; background-color:#6CCAEA; color:white;">
+                        <p style="text-align:center;">Aanbiedingen</p>
+                    </div>
+                    <ul class="bxslider">
+                        <?php
+                        if (mysqli_num_rows($sliderResults) > 0) {
+                            while ($rij = mysqli_fetch_row($sliderResults)) {
+                                ?>
+                                <li><img src="<?php echo $rij[6]; ?>"/></li>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
