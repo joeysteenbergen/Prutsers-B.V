@@ -1,6 +1,7 @@
 <?php
 session_start();
-var_dump($_SESSION['lijstProducten']);
+
+$_SESSION['lijstProducten'];
 
 if(isset($_GET['delete_id']))
 {
@@ -58,24 +59,24 @@ if(isset($_POST['afrekenen']))
                 <?php
                 $subtotaal = 0;
                 $totaal = 0;
-//                foreach($_SESSION['lijstProducten'] as $product)
-                for($i =0; $i < count($_SESSION['lijstProducten']); $i++)
+
+               foreach($_SESSION['lijstProducten'] as $product)
                 {
-//                    var_dump($product);
-                    echo '<tr>
+                    ?>
+                   <tr>
                             <td class="col-sm-8 col-md-6">
                                 <div class="media">
                                     <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
                                     <div class="media-body">
-                                        <h4 class="media-heading"><a href="#">'; echo $_SESSION['lijstProducten'][$i]['Naam']; echo'</a></h4>
+                                        <h4 class="media-heading"><a href="#"> <?php echo $product['Naam']; ?></a></h4>
                                         <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                                     </div>
                                 </div></td>
                             <td class="col-sm-1 col-md-1" style="text-align: center">
-                                <input type="number" class="form-control" name="productAantal" value="'; echo $_SESSION['lijstProducten'][$i]['Aantal']; echo'">
+                                <input type="number" class="form-control" name="productAantal" value="<?php echo $_SESSION['lijstProducten'][$i]['Aantal']; ?>">
                             </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>€'; echo $_SESSION['lijstProducten'][$i]['Prijs']; echo'</strong></td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>€'; echo $som = $_SESSION['lijstProducten'][$i]['Aantal'] * $_SESSION['lijstProducten'][$i]['Prijs']; echo'</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>€ <?php echo $_SESSION['lijstProducten'][$i]['Prijs']; ?></strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>€ <?php echo $som = $_SESSION['lijstProducten'][$i]['Aantal'] * $_SESSION['lijstProducten'][$i]['Prijs']; ?></strong></td>
                             <td class="col-sm-1 col-md-1">
                                 <button type="button" class="btn btn-success">
                                     <span class="glyphicon glyphicon-refresh"></span> Update
@@ -85,7 +86,8 @@ if(isset($_POST['afrekenen']))
                                         <button href="javascript:delete_id('.$i.')" name="verwijderen" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove</button>
                                 
                             </td>
-                        </tr>';
+                        </tr>
+                <?php
                     $subtotaal += $som;
                 }
                 ?>

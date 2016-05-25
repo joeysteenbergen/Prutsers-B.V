@@ -3,11 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link href="productpagina.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="../Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="productpagina.css">
     <title>Webshop</title>
-
 </head>
 <body>
 <?php
@@ -45,21 +44,28 @@ if(isset($_POST['bestellen']))
 {
     if($_SESSION['totaalProducten'] == null)
     {
+        $aantalBesteld = $_POST['aantal'];
         $aantalProducten = 0;
-//        $aantalProducten++;
-        $aantalProducten += $_POST['aantal'];
+        $aantalProducten + $aantalBesteld;
         $_SESSION['totaalProducten'] = $aantalProducten;
     }
 
     elseif($_SESSION['totaalProducten'] != null)
     {
+        $aantalBesteld = $_POST['aantal'];
         $aantalProducten = $_SESSION['totaalProducten'];
-        $aantalProducten++;
+        $aantalProducten + $aantalBesteld;
         $_SESSION['totaalProducten'] = $aantalProducten;
     }
 
-    $_SESSION['lijstProducten'][] = array('ID' => $_POST['productID'], 'Naam' => $_POST['naam'], 'Prijs' => $_POST['prijs'], 'Aantal' => $_POST['aantal']);
-    var_dump($_SESSION['lijstProducten']);
+    $ProductID = $_POST['productID'];
+    $Naam = $_POST['naam'];
+    $Prijs = $_POST['prijs'];
+    $Aantal = $_POST['aantal'];
+
+
+    $BestelArray = array('ID' => $ProductID,'Naam' => $Naam,'Prijs' => $Prijs,'Aantal' => $Aantal);
+    $_SESSION['lijstProducten'] = $BestelArray;
 }
 
 if(isset($_SESSION['totaalProducten']))
@@ -73,6 +79,12 @@ if(isset($_SESSION['totaalProducten']))
     {
         $aantalProducten = $_SESSION['totaalProducten'];
     }
+}
+
+else
+{
+    $aantalProducten = 0;
+    $_SESSION['totaalProducten'] = $aantalProducten;
 }
 ?>
 <div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,7 +146,7 @@ if(isset($_SESSION['totaalProducten']))
                         <ul class="nav navbar-nav navbar-right">
                             <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
                             <li role="presentation"><a href="#" data-href="gebruiker/RegisterPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
-                            <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
+                            <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $_SESSION['totaalProducten']; ?>)</span></a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
@@ -190,26 +202,23 @@ if(isset($_SESSION['totaalProducten']))
                                                                 </div>
                                                                 <div class="col-xs-9">
                                                                     <div class="col-xs-12">
-                                                                        <form action="" method="post">
+                                                                        <form method="post" action="">
                                                                             <div class="col-xs-6">
-                                                                                <label>ID: <input name="productID" style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
-                                                                                <label>Naam: <input name="naam" style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
-                                                                                <label>Kleur: <input
-                                                                                        style="border:none;" readonly required value="<?php echo $rij[9] ?>"/></label>
+                                                                                <label>ID: <input type="hidden" name="productID" style="border:none;" required value="<?php echo $rij[0] ?>"/><input name="productID" style="border:none;" readonly required value="<?php echo $rij[0] ?>"/></label>
+                                                                                <label>Naam: <input type="hidden" name="naam" style="border:none;" required value="<?php echo $rij[1] ?>"/><input name="naam" style="border:none;" readonly required value="<?php echo $rij[1] ?>"/></label>
+                                                                                <label>Kleur: <input type="hidden" style="border:none;" required value="<?php echo $rij[9] ?>"/><input style="border:none;" readonly required value="<?php echo $rij[9] ?>"/></label>
                                                                             </div>
                                                                             <div class="col-xs-6">
-                                                                                <label>Prijs: €<input name="prijs" style="border:none; width:auto;" readonly required value="<?php echo $rij[2] ?>,-"/></label>
+                                                                                <label>Prijs: <input type="hidden" name="prijs" style="border:none; width:auto;" required value="€<?php echo $rij[2] ?>,-"/><input name="prijs" style="border:none; width:auto;" readonly required value="€<?php echo $rij[2] ?>,-"/></label>
                                                                                 <br/>
                                                                                 <br/>
                                                                                 <br/>
                                                                                 <div class="input-group">
-                                                                                    <input name="aantal" value="1" min="1" class="form-control" placeholder="Aantal producten" type="number">
-                                                                                    <span class="input-group-btn">
-                                                                                        <button name="bestellen" type="submit" class="btn btn-primary">
-                                                                                            <span class="glyphicon glyphicon-shopping-cart"></span> In winkelwagen</button>
-                                                                                    </span>
+                                                                                    <input name="aantal" value="1" min="1" class="form-control" type="number">
+                                                                                    <div class="input-group-btn">
+                                                                                        <button name="bestellen" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> In winkelwagen</button>
+                                                                                    </div>
                                                                                 </div>
-<!--                                                                                <button name="bestellen" class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-shopping-cart"></i> In winkelwagen</button>-->
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -253,8 +262,7 @@ if(isset($_SESSION['totaalProducten']))
                                                         <div class="row">
                                                             <div class="col-xs-12">
                                                                 <div class="col-xs-3">
-                                                                    <img src="../ProductImages/badeendgeeldr1.jpg"
-                                                                         style="border:1px solid black; height:150px; width:150px;"/>
+                                                                    <img src="../<?php echo $rij[6] ?>" style="border:1px solid black; height:150px; width:150px;"/>
                                                                 </div>
                                                                 <div class="col-xs-9">
                                                                     <div class="col-xs-12">
@@ -307,10 +315,5 @@ if(isset($_SESSION['totaalProducten']))
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>

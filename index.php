@@ -1,22 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="jquery.bxslider.js"></script>
-    <script src="jquery.bxslider.min.js"></script>
-    <link href="jquery.bxslider.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script type="text/javascript" src="jquery-1.12.2.js"></script>
+    <script type="text/javascript" src="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.css">
     <link href="index.css" type="text/css" rel="stylesheet">
-<title>Webshop</title>
+    <title>Webshop</title>
 
-<script type="text/javascript">
-    function SearchID(id) {
-        window.location.href = "Producten/Productpagina.php?categorie=" + id;
-    }
-</script>
+    <script type="text/javascript">
+        function SearchID(id) {
+            window.location.href = "Producten/Productpagina.php?categorie=" + id;
+        }
+    </script>
 
 </head>
 <body>
@@ -36,16 +33,22 @@ $resultAlleRecords = mysqli_query($link, $alleRecords);
 $sliderRecords = "SELECT * FROM producten WHERE Aanbieding = '1'";
 $sliderResults = mysqli_query($link, $sliderRecords);
 
-if(isset($_SESSION['totaalProducten']))
+if (isset($_POST["zoeken"])) {
+    $zoekresultaat = $_POST["zoekenText"];
+    $_SESSION["zoek"] = $zoekresultaat;
+    header("Location: Producten/Productpagina.php");
+    exit();
+}
+
+if (isset($_SESSION['totaalProducten']))
 {
-    if($_SESSION['totaalProducten'] == null)
+    if ($_SESSION['totaalProducten'] == null)
     {
         $aantalProducten = 0;
     }
-
-    elseif($_SESSION['totaalProducten'] != null)
+    elseif ($_SESSION['totaalProducten'] != null)
     {
-       $aantalProducten = $_SESSION['totaalProducten'];
+        $aantalProducten = $_SESSION['totaalProducten'];
     }
 }
 
@@ -54,25 +57,11 @@ else
     $aantalProducten = 0;
 }
 
-if(isset($_POST["zoeken"]))
-{
-    $zoekresultaat = $_POST["zoekenText"];
-    $_SESSION["zoek"] = $zoekresultaat;
-    header("Location: Producten/Productpagina.php");
-    exit();
-}
-
-
 ?>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.bxslider').bxSlider();
-    });
-</script>
-
-<div class="modal fade" style="height:100%;" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="height:100%;">
+<div class="modal fade" style="height:100%;" id="login" tabindex="1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="height:100%; z-index: 1;">
         <div class="modal-content" style="height:100%;">
             <div class="modal-body" style="height:100%;">
                 <iframe style="height:100%; width:100%;" frameborder="0" src="gebruiker/LoginPage.php">
@@ -82,8 +71,9 @@ if(isset($_POST["zoeken"]))
         </div>
     </div>
 </div>
-<div class="modal fade" style="height:100%;" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="height:100%;">
+<div class="modal fade" style="height:100%;" id="register" tabindex="1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="height:100%; z-index: 1;">
         <div class="modal-content" style="height:100%;">
             <div class="modal-body" style="height:100%;">
                 <iframe style="height:100%; width:100%;" frameborder="0" src="gebruiker/RegisterPage.php">
@@ -123,7 +113,7 @@ if(isset($_POST["zoeken"]))
                         </ul>
                         <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
                             <div class="form-group" style="width:300px; margin-left:200px;">
-                                <input type="text" style="width:100%;"; class="form-control" name="zoekenText" placeholder="Zoeken">
+                                <input type="text" style="width:100%;" class="form-control" name="zoekenText" placeholder="Zoeken">
                             </div>
                             <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
                         </form>
@@ -141,7 +131,9 @@ if(isset($_POST["zoeken"]))
         <div class="col-xs-2 stretch">
             <nav class="navbar navbar-default" style="border-radius:5px;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li style="border:1px solid #6CCAEA; background-color:#6CCAEA; color:white; font-weight:bold; text-align:center;">Categorieën</li>
+                    <li style="border:1px solid #6CCAEA; background-color:#6CCAEA; color:white; font-weight:bold; text-align:center;">
+                        Categorieën
+                    </li>
                     <?php
                     if (mysqli_num_rows($resultAlleRecords) > 0) {
                         while ($rij = mysqli_fetch_row($resultAlleRecords)) {
@@ -155,31 +147,27 @@ if(isset($_POST["zoeken"]))
             </nav>
         </div>
         <div class="col-xs-10 stretch">
-            <div class="col-xs-4">
-                <div style="border:1px black solid";>
-                    <div style="border:1px black solid; background-color:#6CCAEA; color:white;">
-                        <p style="text-align:center;">Aanbiedingen</p>
+            <?php
+            if (mysqli_num_rows($sliderResults) > 0) {
+                while ($rij = mysqli_fetch_row($sliderResults)) {
+                    ?>
+                    <div id="card" style="float:left; margin-left:10px;">
+                        <div id="titleCard" style="height:100%; width:100%; border-top:1px solid black; border-left: 1px solid black; border-right:1px solid black; background-color:#6CCAEA;">
+                            <p style="text-align:center; color:white; font-weight:bold;">Aanbieding</p>
+                        </div>
+                        <div id="imageCard" style="border-left: 1px solid black; border-right:1px solid black;">
+                            <img src="<?php echo $rij[6]; ?>"/>
+                        </div>
+                        <div id="descriptionCard" style="border:1px solid black;">
+                            <p style="text-align:center;"><?php echo $rij[4]; ?></p>
+                        </div>
                     </div>
-                    <ul class="bxslider">
-                        <?php
-                        if (mysqli_num_rows($sliderResults) > 0) {
-                            while ($rij = mysqli_fetch_row($sliderResults)) {
-                                ?>
-                                <li><img src="<?php echo $rij[6]; ?>"/></li>
-                                <?php
-                            }
-                        }
-                        ?>
-                    </ul>
-                </div>
-            </div>
+                    <?php
+                }
+            }
+            ?>
         </div>
     </div>
 </div>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>
