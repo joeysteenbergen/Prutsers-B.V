@@ -1,45 +1,73 @@
-<?php 
-session_start();
-include_once('includes/bodystart.php');
+<html>
+<head>
+    <script src="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<?php
+
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'webshop';
+$link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
+
+if(isset($_POST['inloggen']))
+{
+    $emailadres = $_POST['emailadres'];
+    $wachtwoord = $_POST['wachtwoord'];
+
+    $getWachtwoord = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerWachtwoord FROM gebruikers WHERE GebruikerEmail = '$emailadres' AND GebruikerRecht = 'Admin'"));
+    $DbWachtwoord = implode('', $getWachtwoord);
+    $wachtwoord = hash("sha256", $wachtwoord);
+
+
+    if ($DbWachtwoord == $wachtwoord)
+    {
+        session_start();
+        session_regenerate_id(true);
+        $_SESSION['GebruikerVoornaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerVoornaam FROM gebruikers WHERE GebruikerEmail = '$emailadres'"));
+        $_SESSION['GebruikerAchternaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerAchternaam FROM gebruikers WHERE GebruikerEmail = '$emailadres'"));
+        $_SESSION['GebruikerSet'] = true;
+        header("Location: product_overzicht.php");
+        exit();
+    }
+
+    else
+    {
+        echo "Inloggen mislukt";
+    }
+}
+
 ?>
 
-    <nav class="navbar navbar-default no-margin">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header fixed-brand">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
-                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-            </button>
-            <a class="navbar-brand" href="index.php"><i class="fa fa-rocket fa-4"></i> Naar hoofdpagina</a>
-        </div><!-- navbar-header-->
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-3">
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
-            </ul>
-        </div><!-- bs-example-navbar-collapse-1 -->
-    </nav>
+        </div>
+        <div class="col-xs-6">
+            <div class="logIn">
+                <h2>Inloggen</h2>
+                <form method="post" action="#">
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="emailadres" class="form-control" placeholder="E-mail"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Wachtwoord</label>
+                        <input type="password" name="wachtwoord" class="form-control" placeholder="Wachtwoord"/>
+                    </div>
+                    <input class="btn btn-primary" type="submit" name="inloggen" value="Inloggen" />
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-3">
 
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <?php include_once('includes/sidemenu.php')?>
-
-        <!-- Page Content -->
-        <div class="container-fluid xyz scroll">
-            <?php
-            if(!empty($_GET['page']))
-            {
-                if(!file_exists($_GET['page'].".php"))
-                {
-                    echo "error - page not found";
-                }
-                else {
-                    include($_GET['page'].".php");
-                }
-            }
-            else {
-                echo "Welkom";
-            }
-            ?>
         </div>
     </div>
-<?php include_once('includes/bodyclose.php') ?>
+</div>
+</body>
+</html>

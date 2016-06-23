@@ -1,13 +1,14 @@
 <?php
-session_start();
 
-$_SESSION['lijstProducten'];
+include("../DatabaseConnectie.php");
+
+session_start();
 
 if(isset($_GET['delete_id']))
 {
 //    echo "delete id = " . $_GET['delete_id'];
-    unset($_SESSION['lijstProducten'][$_GET['delete_id']]);
-    $_SESSION['lijstProducten'] = array_values($_SESSION['lijstProducten'][$_GET['delete_id']]);
+    unset($_SESSION['cart'][$_GET['delete_id']]);
+    $_SESSION['cart'] = array_values($_SESSION['cart'][$_GET['delete_id']]);
 }
 
 if(isset($_POST['afrekenen']))
@@ -16,15 +17,15 @@ if(isset($_POST['afrekenen']))
     {
         if($_SESSION['totaalProducten'] == null)
         {
-            unset($_SESSION['lijstProducten']);
-            var_dump($_SESSION['lijstProducten']);
+            unset($_SESSION['cart']);
+            var_dump($_SESSION['cart']);
             return;
             $aantalProducten = 0;
         }
 
         elseif($_SESSION['totaalProducten'] != null)
         {
-            unset($_SESSION['lijstProducten']);
+            unset($_SESSION['cart']);
             $_SESSION['totaalProducten'] = 0;
             header("Location: ../index.php");
             exit();
@@ -36,9 +37,8 @@ if(isset($_POST['afrekenen']))
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link href="index.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="../Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Bootstrap/bootstrap-3.3.6-dist/bootstrap-3.3.6-dist/css/bootstrap.min.css">
     <title>Webshop</title>
 </head>
 <body>
@@ -57,10 +57,8 @@ if(isset($_POST['afrekenen']))
                 </thead>
                 <tbody>
                 <?php
-                $subtotaal = 0;
-                $totaal = 0;
 
-               foreach($_SESSION['lijstProducten'] as $product)
+               foreach($_SESSION['cart'] as $product)
                 {
                     ?>
                    <tr>
@@ -69,14 +67,14 @@ if(isset($_POST['afrekenen']))
                                     <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
                                     <div class="media-body">
                                         <h4 class="media-heading"><a href="#"> <?php echo $product['Naam']; ?></a></h4>
-                                        <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                        <span>Status: </span><span class="text-success"><strong>Op voorraad</strong></span>
                                     </div>
                                 </div></td>
                             <td class="col-sm-1 col-md-1" style="text-align: center">
-                                <input type="number" class="form-control" name="productAantal" value="<?php echo $_SESSION['lijstProducten'][$i]['Aantal']; ?>">
+                                <input type="number" class="form-control" name="productAantal" required value="<?php echo $product['Aantal']; ?>">
                             </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>€ <?php echo $_SESSION['lijstProducten'][$i]['Prijs']; ?></strong></td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>€ <?php echo $som = $_SESSION['lijstProducten'][$i]['Aantal'] * $_SESSION['lijstProducten'][$i]['Prijs']; ?></strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong> <?php echo $product['Prijs']; ?></strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>€ <?php echo $som = $product['Prijs'] * $product['Aantal']; ?></strong></td>
                             <td class="col-sm-1 col-md-1">
                                 <button type="button" class="btn btn-success">
                                     <span class="glyphicon glyphicon-refresh"></span> Update
@@ -88,8 +86,9 @@ if(isset($_POST['afrekenen']))
                             </td>
                         </tr>
                 <?php
-                    $subtotaal += $som;
                 }
+
+                $subtotaal = $som;
                 ?>
 
                 <tr>

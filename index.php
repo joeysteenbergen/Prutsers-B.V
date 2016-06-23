@@ -19,11 +19,7 @@
 <body>
 <?php
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db = 'webshop';
-$link = mysqli_connect($host, $user, $pass, $db) or die(mysqli_error($link));
+include('DatabaseConnectie.php');
 
 session_start();
 
@@ -118,8 +114,7 @@ else
                             <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
                         </form>
                         <ul class="nav navbar-nav navbar-right">
-                            <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
-                            <li role="presentation"><a href="#" data-href="gebruiker/RegisterPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
+                            <li role="presentation"><a href="gebruiker/LoginPage.php">Inloggen/Registreren</a></li>
                             <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
