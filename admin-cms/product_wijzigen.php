@@ -20,9 +20,6 @@ $Achternaam = implode('', $_SESSION['GebruikerAchternaam']);
 $sql_fetch_producten = "SELECT * FROM producten WHERE ProductID = " . $_GET['edit_id'];
 $res = mysqli_query($conn, $sql_fetch_producten);
 
-var_dump($sql_fetch_producten);
-var_dump($res);
-
 $ListCat = "SELECT CategorieID, CategorieNaam FROM categorieen";
 $resCat = mysqli_query($conn, $ListCat);
 
@@ -59,10 +56,7 @@ if(isset($_POST['opslaan']))
                 <h3 class="panel-title">Product wijzigen</h3>
             </div>
             <div class="panel-body">
-                <?php
-                while($rij = mysqli_fetch_row($res))
-                {
-                    ?>
+
                     <form method="post" action="" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="categorielist">Selecteer categorie</label>
@@ -78,7 +72,10 @@ if(isset($_POST['opslaan']))
                                 ?>
                             </select>
                         </div> <!-- Categorie end -->
-
+                        <?php
+                        while($rij = mysqli_fetch_row($res))
+                        {
+                        ?>
                         <div class="form-group">
                             <label for="productnaam">Naam</label>
                             <input type="text" class="form-control" id="productnaam" name="productnaam" placeholder="Naam product" required value="<?php echo $rij[1]; ?>"/>
@@ -90,38 +87,51 @@ if(isset($_POST['opslaan']))
                         </div> <!-- Productprijs end -->
 
                         <div class="form-group">
-                            <label for="productaantal">Aantal in opslag</label>
-                            <input type="text" class="form-control" id="productaantal" name="productvoorraad" placeholder="Aantal producten" required value="<?php echo $rij[3]; ?>"/>
-                        </div> <!-- Productaantal end -->
-
-                        <div class="form-group">
-                            <label for="productkleur">Kleur</label>
-                            <input type="text" class="form-control" id="productkleur" name="productkleur" placeholder="Kleur product" required value="<?php echo $rij[4]; ?>"/>
-                        </div> <!-- Productkleur end -->
-
-                        <div class="form-group">
                             <label for="productomschrijvingkort">Omschrijving kort</label>
-                            <textarea class="form-control" rows="2" id="productomschrijvingkort" name="productomschrijvingkort" required value="<?php echo $rij[5]; ?>"></textarea>
+                            <textarea class="form-control" rows="2" id="productomschrijvingkort" name="productomschrijvingkort"> <?php echo $rij[3]; ?></textarea>
                         </div> <!-- Productomschrijvingkort end -->
 
                         <div class="form-group">
                             <label for="productomschrijvinglang">Omschrijving lang</label>
-                            <textarea class="form-control" rows="4" id="productomschrijvinglang" name="productomschrijvinglang" required value="<?php echo $rij[6]; ?>"></textarea>
+                            <textarea class="form-control" rows="4" id="productomschrijvinglang" name="productomschrijvinglang"><?php echo $rij[4]; ?></textarea>
                         </div> <!-- Productomschrijvinglang end -->
 
                         <div class="form-group">
                             <label for="producttags">Tags (spatie gescheiden)</label>
-                            <textarea class="form-control" rows="1" id="producttags" name="producttags" required value="<?php echo $rij[7]; ?>"></textarea>
+                            <textarea class="form-control" rows="1" id="producttags" name="producttags"><?php echo $rij[5]; ?></textarea>
                         </div> <!-- Producttags end -->
 
                         <div class="form-group">
                             <label for="productpicture">Product foto</label>
-                            <input type="file" name="productfoto" id="productfoto" value="<?php echo $rij[8]; ?>"/>
+                            <input type="file" name="productfoto" id="productfoto" required/>
                         </div> <!-- Productpicture end -->
 
                         <div class="form-group">
+                            <label for="productkleur">Kleur</label>
+                            <input type="text" class="form-control" id="productkleur" name="productkleur" placeholder="Kleur product" required value="<?php echo $rij[9]; ?>"/>
+                        </div> <!-- Productkleur end -->
+
+                        <div class="form-group">
+                            <label for="productaantal">Aantal in opslag</label>
+                            <input type="text" class="form-control" id="productaantal" name="productvoorraad" placeholder="Aantal producten" required value="<?php echo $rij[10]; ?>"/>
+                        </div> <!-- Productaantal end -->
+
+                        <div class="form-group">
                             <label for="productaanbieding">Is aanbieding?</label>
-                            <input type="checkbox" id="productaanbieding" name="productaanbieding" value="<?php echo $rij[1]; ?>"/>
+                            <?php
+                            if($rij[11] == "1")
+                            {
+                                ?>
+                                <input type="checkbox" id="productaanbieding" name="productaanbieding" checked/>
+                            <?php
+                            }
+
+                            else {
+                                ?>
+                                <input type="checkbox" id="productaanbieding" name="productaanbieding" />
+                                <?php
+                            }
+                            ?>
                         </div> <!-- Productaanbieding end -->
                         <div class="form-group">
                             <input type="submit" name="opslaan" value="Opslaan" class="btn btn-primary">

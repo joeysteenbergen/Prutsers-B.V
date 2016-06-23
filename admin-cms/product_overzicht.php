@@ -13,9 +13,9 @@
 
         function delete_id(id)
         {
-            if(confirm('Weet u zeker dat u dit record wilt verwijderen ?'))
+            if(confirm('Weet u zeker dat u dit product wilt verwijderen ?'))
             {
-                window.location.href = "overzicht.php?delete_id=" + id;
+                window.location.href = "product_overzicht.php?delete_id=" + id;
             }
         }
     </script>
@@ -40,6 +40,11 @@ if($_SESSION['GebruikerSet'] == true) {
         $resultEditRecords = mysqli_query($conn, $editRecords);
     }
 
+    if (isset($_GET['delete_id'])) {
+        $delete = "DELETE FROM producten WHERE ProductID=" .$_GET['delete_id'];
+        $res = mysqli_query($conn, $delete);
+        header("Location: product_overzicht.php");
+    }
 
     ?>
     <div class="row">
