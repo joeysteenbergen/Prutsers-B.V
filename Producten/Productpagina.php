@@ -141,38 +141,85 @@ else
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
+            <?php
+            if(isset($_SESSION['GebruikerSet']))
+            {
+                ?>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="../index.php">Home <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                        <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
-                            <div class="form-group" style="width:300px; margin-left:200px;">
-                                <input type="text" style="width:100%;"; class="form-control" name="zoekenText" placeholder="Zoeken">
-                            </div>
-                            <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
-                        </form>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li role="presentation"><a href="#" data-href="gebruiker/LoginPage.php" data-toggle="modal" data-target="#login">Inloggen</a></li>
-                            <li role="presentation"><a href="#" data-href="gebruiker/RegisterPage.php" data-toggle="modal" data-target="#register">Registreren</a></li>
-                            <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $_SESSION['totaalProducten']; ?>)</span></a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                            <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
+                                <div class="form-group" style="width:300px; margin-left:200px;">
+                                    <input type="text" style="width:100%;" class="form-control" name="zoekenText"
+                                           placeholder="Zoeken">
+                                </div>
+                                <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
+                            </form>
+                            ?php echo $_SESSION['GebruikerVoornaam'] .' '. $_SESSION['GebruikerAchternaam']; ?>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li role="presentation"><?php echo $_SESSION['GebruikerVoornaam'] .' '. $_SESSION['GebruikerAchternaam']; ?></li>
+                                <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+                <?php
+            }
+
+            else {
+                ?>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                            <form method="post" action="index.php" class="navbar-form navbar-left" role="search">
+                                <div class="form-group" style="width:300px; margin-left:200px;">
+                                    <input type="text" style="width:100%;" class="form-control" name="zoekenText"
+                                           placeholder="Zoeken">
+                                </div>
+                                <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
+                            </form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li role="presentation"><a href="gebruiker/LoginPage.php">Inloggen/Registreren</a></li>
+                                <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+                <?php
+            }
+            ?>
         </div>
     </div>
     <div class="row">

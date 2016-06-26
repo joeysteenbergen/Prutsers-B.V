@@ -23,7 +23,7 @@ if(isset($_POST['submitLogin'])) {
     {
         $_SESSION['GebruikerVoornaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerVoornaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
         $_SESSION['GebruikerAchternaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerAchternaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
-        $_SESSION['GebruikerSet'] = true;
+        $_SESSION['GebruikerSet'] = 1;
         header("Location: ../index.php");
         exit();
     }
@@ -55,6 +55,10 @@ if(isset($_POST['submitRegister']))
 
     $addQuery = "INSERT INTO gebruikers VALUES('','$voornaam','$tussenvoegsel','$achternaam','$straat','$nummer','$postcode','$woonplaats','$land','$email','$telefoonnummer','$geslacht','$wachtwoord', '', '$rechten')";
     $Query = mysqli_query($link, $addQuery);
+
+    $_SESSION['GebruikerVoornaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerVoornaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
+    $_SESSION['GebruikerAchternaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerAchternaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
+    $_SESSION['GebruikerSet'] = true;
 
     header("Location: ../index.php");
     exit();
