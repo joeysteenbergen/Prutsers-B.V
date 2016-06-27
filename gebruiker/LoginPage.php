@@ -23,7 +23,7 @@ if(isset($_POST['submitLogin'])) {
     {
         $_SESSION['GebruikerVoornaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerVoornaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
         $_SESSION['GebruikerAchternaam'] = mysqli_fetch_assoc(mysqli_query($link, "SELECT GebruikerAchternaam FROM gebruikers WHERE GebruikerEmail = '$email'"));
-        $_SESSION['GebruikerSet'] = 1;
+        $_SESSION['GebruikerSet'] = true;
         header("Location: ../index.php");
         exit();
     }

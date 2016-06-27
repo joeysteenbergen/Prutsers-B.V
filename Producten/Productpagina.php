@@ -52,7 +52,7 @@ if(isset($_POST['bestellen']))
         $aantalProducten = 0;
         $_SESSION['totaalProducten'] = $aantalProducten + $aantalBesteld;
 
-        if($_SESSION['cart']['Naam'] == $_POST['Naam'])
+        if(isset($_SESSION['cart']['Naam']) == $_POST['HiddenNaam'])
         {
             $_SESSION['cart'][$productID] + $_POST['Aantal'];
             $productID = $_POST['HiddenProductID'];
@@ -72,7 +72,7 @@ if(isset($_POST['bestellen']))
         $aantalProducten = $_SESSION['totaalProducten'];
         $_SESSION['totaalProducten'] = $aantalProducten + $aantalBesteld;
 
-        if($_SESSION['cart']['Naam'] == $_POST['Naam'])
+        if(isset($_SESSION['cart']['Naam']) == $_POST['HiddenNaam'])
         {
             $_SESSION['cart'][$productID] + $_POST['Aantal'];
             $productID = $_POST['HiddenProductID'];
@@ -171,10 +171,9 @@ else
                                 </div>
                                 <button type="submit" name="zoeken" class="btn btn-primary">Zoeken</button>
                             </form>
-                            ?php echo $_SESSION['GebruikerVoornaam'] .' '. $_SESSION['GebruikerAchternaam']; ?>
                             <ul class="nav navbar-nav navbar-right">
                                 <li role="presentation"><?php echo $_SESSION['GebruikerVoornaam'] .' '. $_SESSION['GebruikerAchternaam']; ?></li>
-                                <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
+                                <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
@@ -212,7 +211,7 @@ else
                             </form>
                             <ul class="nav navbar-nav navbar-right">
                                 <li role="presentation"><a href="gebruiker/LoginPage.php">Inloggen/Registreren</a></li>
-                                <li role="presentation"><a href="Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
+                                <li role="presentation"><a href="../Winkelwagen/Winkelwagen.php"><span class="glyphicon glyphicon-shopping-cart">&nbsp;Winkelwagen (<?php echo $aantalProducten; ?>)</span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->

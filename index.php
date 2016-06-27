@@ -26,9 +26,11 @@ session_start();
 $alleRecords = "SELECT * FROM categorieen";
 $resultAlleRecords = mysqli_query($link, $alleRecords);
 
-if(isset($_SESSION['GebruikerSet']))
+if($_SESSION['GebruikerSet'] == true)
 {
     $Gebruiker = $_SESSION['GebruikerSet'];
+    $GebruikerVoornaam = implode('', $_SESSION['GebruikerVoornaam']);
+    $GebruikerAchternaam = implode('', $_SESSION['GebruikerAchternaam']);
 }
 else
 {
@@ -98,7 +100,7 @@ else
     <div class="row">
         <div class="col-xs-12">
             <?php
-            if($Gebruiker == 1)
+            if($Gebruiker == true)
             {
                 ?>
                 <nav class="navbar navbar-default">

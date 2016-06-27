@@ -25,7 +25,7 @@ $resCat = mysqli_query($conn, $ListCat);
 
 if(isset($_POST['opslaan']))
 {
-    header("Location:product_overzicht");
+    header("Location:product_overzicht.php");
 }
 
 ?>
